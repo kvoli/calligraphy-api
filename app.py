@@ -91,7 +91,7 @@ def get_data():
 
 
 @app.route('/put', methods=['GET', 'POST'])
-def get_data():
+def up_data():
     if request.method == 'GET':
         return json.dumps(instance_storage)
     else:

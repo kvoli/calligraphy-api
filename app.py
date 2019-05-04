@@ -27,7 +27,7 @@ def index():
 
 @app.route('/packages/<package>/<id>')
 def get_package_object(package=None, id=None):
-    return json.dumps(instance_storage[package][0][id])
+    return json.dumps(instance_storage[package][id])
 
 
 @app.route('/packages/<package>')

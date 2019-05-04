@@ -87,7 +87,7 @@ def get_data():
 
         print(url)
 
-        return json.dumps(imageSimilarity(url, "static/fed.png"))
+        return json.dumps(imageSimilarity('./static/' + uid + '.png', "./static/fed.png"))
 
 
 @app.route('/put', methods=['GET', 'POST'])

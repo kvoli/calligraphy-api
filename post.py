@@ -10,7 +10,7 @@ with open(file, 'rb') as f:
     # print(t)
     x = base64.b64encode(t)
     # print(x)
-    out = requests.post('https://frozen-badlands-62690.herokuapp.com/put', data=x)
+    out = requests.post('https://frozen-badlands-62690.herokuapp.com/up', data=x)
 
 
 

@@ -93,15 +93,17 @@ def get_data():
         # decode and save the image
         url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.png'
 
-        imageData = request.get_data()
-
+        # {"package": "<insert-package>", "id": "<insert-id>", "b64": "<b64encoded>"}
+        data = request.get_data()
+        imageData = data["b64"]
+        path = instance_storage[data["package"]][0][data["id"]]["path"] + '.png'
         imgdata = base64.b64decode(imageData)
         with open(path, 'wb') as f:
             f.write(imgdata)
 
         print(url)
 
-        return json.dumps(imageSimilarity('./static/' + uid + '.png', "./static/fed.png"))
+        return json.dumps(imageSimilarity(url, path))
 
 
 @app.route('/put', methods=['GET', 'POST'])

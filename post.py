@@ -10,8 +10,10 @@ with open(file, 'rb') as f:
     t = f.read()
     # print(t)
     x = base64.b64encode(t)
-    # print(x)
-    out = requests.post('https://frozen-badlands-62690.herokuapp.com/put', data=x)
+
+    y = {"package": "chinese.json", "id": "0", "b64": x}
+    print(y)
+    out = requests.post('https://frozen-badlands-62690.herokuapp.com/put', data=y)
 
     print(out.status_code, out.text)
 

@@ -3,7 +3,7 @@ import json
 import base64
 
 
-path = "./static/Flags/"
+path = "./static/cc/"
 path1 = "./static/stroke/"
 
 curl = "https://frozen-badlands-62690.herokuapp.com/static/"
@@ -18,7 +18,6 @@ print(names)
 
 letters = []
 
-
 # with open("./static/cc/bu.png", "rb") as f:
 #     data = f.read()
 #     encoded_string = base64.b64encode(data)
@@ -27,23 +26,25 @@ letters = []
 
 
 
-def lettersToJson(id, name, url1):
+def lettersToJson(id, name, url1, p):
 
     u1 = curl + "cu/" + url1 + ".png"
     u2 = curl + "stroke/" + url1 + ".gif"
+    pathu = p + name
 
     letter = {id: {
         "id":id,
         "name":name,
         "static":u1,
-        "gif":"None"
+        "gif":u2,
+        "path":pathu
      }}
 
     return letter
 
 
 for i in range(len(names)):
-    letters.append(lettersToJson(i, names[i].strip(".png"), names[i].strip(".png")))
+    letters.append(lettersToJson(i, names[i].strip(".png"), names[i].strip(".png"), path))
 
 
 with open('./packages/Flags.json', 'w') as f:

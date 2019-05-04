@@ -31,7 +31,7 @@ def imageSimilarity(ref1, ref2):
     imageA = cv2.imread(ref2, cv2.IMREAD_UNCHANGED)
     imageB = cv2.imread(ref1, cv2.IMREAD_UNCHANGED)
 
-    width = 350
+    width = 450
     height = 450
     dim = (width, height)
 
@@ -75,9 +75,9 @@ def get_data():
         # generate a unique id
         uid = str(uuid.uuid4())
         # generate image url
-        path = './static/' + uid + '.jpg'
+        path = './static/' + uid + '.png'
         # decode and save the image
-        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.jpg'
+        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.png'
 
         imageData = request.get_data()
 

@@ -85,6 +85,8 @@ def get_data():
         with open(path, 'wb') as f:
             f.write(imgdata)
 
+        print(url)
+
         return json.dumps(imageSimilarity(url, "static/cc/bu.png"))
 
 @app.route('/sim')

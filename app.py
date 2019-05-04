@@ -35,41 +35,34 @@ def get_package(package=None):
     return json.dumps(instance_storage[package])
 
 
-# @app.route('/packages', methods = ['GET', 'POST'])
-# def get_data():
-    # if request.method == 'GET':
-    #   return json.dumps(arr)
-    # else:
-    #
-    #   # generate a unique id
-    #   uid = str(uuid.uuid4())
-    #   # generate image url
-    #   path = './static/' + uid + '.jpg'
-    #   # decode and save the image
-    #   url = 'https://graffite-api.herokuapp.com/static/' + uid + '.jpg'
-    #
-    #   imageData = request.get_data()
-    #
-    #   imgdata = base64.b64decode(imageData)
-    #   with open(path, 'wb') as f:
-    #       f.write(imgdata)
-    #
-      # create the json object from the post paramaters
-      # artObject = {uid: {
-      #   "id":uid,
-      #   "name":request.args['name'],
-      #   "latitude":request.args['latitude'],
-      #   "longitude":request.args['longitude'],
-      #   "description":request.args['description'],
-      #   "time_created":int(time.time()),
-      #   "rating":7,
-      #   "image_url":url
-      # }}
+@app.route('/packages/<package>/', methods = ['GET', 'POST'])
+def get_data(package=None):
+    if request.method == 'GET':
+        return json.dumps(instance_storage.values())
+    else:
+        # generate a unique id
+        uid = str(uuid.uuid4())
+        # generate image url
+        path = './static/' + package + '/' + uid + '.jpg'
+        # decode and save the image
+        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.jpg'
 
-    #
-    #   arr.append(artObject)
-    #
-    #   return json.dumps(json.dumps(artObject))
+        imageData = request.get_data()
+
+        imgdata = base64.b64decode(imageData)
+        with open(path, 'wb') as f:
+            f.write(imgdata)
+
+        # create the json object from the post paramaters
+        new = {uid: {
+            "id":uid,
+            "name":request.args['name'],
+            "image_url":url
+            }}
+
+        instance_storage[package].append(new)
+
+        return json.dumps(json.dumps(new))
 
 
 if __name__ == '__main__': app.run(debug=True)

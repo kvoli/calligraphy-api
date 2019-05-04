@@ -35,24 +35,27 @@ def get_package(package=None):
     return json.dumps(instance_storage[package])
 
 
-@app.route('/packages/<package>/', methods = ['GET', 'POST'])
-def get_data(package=None):
+@app.route('/packages/', methods=['GET', 'POST'])
+def get_data():
     if request.method == 'GET':
         return json.dumps(instance_storage.values())
     else:
         # generate a unique id
         uid = str(uuid.uuid4())
         # generate image url
-        path = './static/' + package + '/' + uid + '.jpg'
+        path = './static/' + uid + '.png'
         # decode and save the image
-        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.jpg'
+        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.png'
 
-        data = request.get_data()
+        data = json.dumps(request.json)
 
-        imageData = data["img"]
+        image_data = data["img"]
         name = data["name"]
+        package = data["package"]
+        
+        print(image_data, name, package)
 
-        imgdata = base64.b64decode(imageData)
+        imgdata = base64.b64decode(image_data)
         with open(path, 'wb') as f:
             f.write(imgdata)
 

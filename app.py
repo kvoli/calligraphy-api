@@ -5,6 +5,11 @@ import uuid
 import base64
 import time
 from flask_request_params import bind_request_params
+# import the necessary packages
+from skimage.measure import compare_ssim
+import argparse
+import imutils
+import cv2
 
 app = Flask(__name__, static_folder='static')
 
@@ -72,6 +77,48 @@ def get_data():
 
         # return json.dumps(json.dumps(new))
         return url
+
+
+app.route("/upload", methods=['POST'])
+def upload_file():
+    def custom_stream_factory(total_content_length, filename, content_type, content_length=None):
+        import tempfile
+        tmpfile = tempfile.NamedTemporaryFile('wb+', prefix='flaskapp', suffix='.nc')
+        app.logger.info("start receiving file ... filename => " + str(tmpfile.name))
+        return tmpfile
+    sim = 0
+    import werkzeug, flask
+    stream, form, files = werkzeug.formparser.parse_form_data(flask.request.environ, stream_factory=custom_stream_factory)
+    for fil in files.values():
+        app.logger.info(" ".join(["saved form name", fil.name, "submitted as", fil.filename, "to temporary file", fil.stream.name]))
+        sim = imageSimilarity(fil.stream.name, "static/cc/bu.png")
+    return sim
+
+
+def imageSimilarity(ref1, ref2):
+    # load the two input images
+    imageA = cv2.imread(ref2, cv2.IMREAD_UNCHANGED)
+    imageB = cv2.imread(ref1, cv2.IMREAD_UNCHANGED)
+
+    width = 350
+    height = 450
+    dim = (width, height)
+
+    # resize image
+    imageA = cv2.resize(imageA, dim, interpolation=cv2.INTER_AREA)
+    imageB = cv2.resize(imageB, dim, interpolation=cv2.INTER_AREA)
+
+    # resize
+
+    # convert the images to grayscale
+    grayA = cv2.cvtColor(imageA, cv2.COLOR_BGR2GRAY)
+    grayB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
+
+    # compute the Structural Similarity Index (SSIM) between the two
+    # images, ensuring that the difference image is returned
+    (score, diff) = compare_ssim(grayA, grayB, full=True)
+    diff = (diff * 255).astype("uint8")
+    return {"sim": str(score), "diff": str(diff)}
 
 
 if __name__ == '__main__': app.run(debug=True)

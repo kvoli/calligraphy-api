@@ -8,3 +8,6 @@ Werkzeug
 boto3
 uuid
 flask_request_params
+opencv-python
+imutils
+scikit-image

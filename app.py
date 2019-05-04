@@ -49,7 +49,21 @@ def imageSimilarity(ref1, ref2):
     # images, ensuring that the difference image is returned
     (score, diff) = compare_ssim(grayA, grayB, full=True)
     diff = (diff * 255).astype("uint8")
-    return {"sim": str(score), "diff": str(diff)}
+    return {"sim": str(score)}
+
+
+def lettersToJson(name, url):
+    curl = "./static/cc/"
+    res = curl + "cu/" + url + ".png"
+
+    letter = {id: {
+        "id": str(len(instance_storage)),
+        "name": str(name),
+        "static": str(res),
+        "gif": "N/A"
+     }}
+
+    return letter
 
 
 @app.route('/')
@@ -107,6 +121,10 @@ def up_data():
         imgdata = base64.b64decode(imageData)
         with open(path, 'wb') as f:
             f.write(imgdata)
+
+        res = lettersToJson("name", url)
+
+        instance_storage["chinese.json"].append(res)
 
         print(url)
 

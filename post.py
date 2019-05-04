@@ -1,4 +1,5 @@
-import requests, base64
+import requests, base64, json
+from urllib.request import urlopen
 
 url = "https://frozen-badlands-62690.herokuapp.com/upload"
 file = "static/fed.png"
@@ -12,7 +13,7 @@ with open(file, 'rb') as f:
     # print(x)
     out = requests.post('https://frozen-badlands-62690.herokuapp.com/up', data=x)
 
-
+    print(out.status_code, out.text)
 
 
 # print(out)

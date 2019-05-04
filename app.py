@@ -43,32 +43,35 @@ def get_data():
         # generate a unique id
         uid = str(uuid.uuid4())
         # generate image url
-        path = './static/' + uid + '.png'
+        path = './static/' + uid + '.jpg'
         # decode and save the image
-        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.png'
+        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.jpg'
 
-        data = json.dumps(request.json)
+        # data = json.dumps(request.json)
 
-        image_data = data["img"]
-        name = data["name"]
-        package = data["package"]
-        
-        print(image_data, name, package)
+        # image_data = data["img"]
+        # name = data["name"]
+        # package = data["package"]
 
-        imgdata = base64.b64decode(image_data)
+        data = request.get_data()
+
+        print(data)
+
+        imgdata = base64.b64decode(data)
         with open(path, 'wb') as f:
             f.write(imgdata)
 
         # create the json object from the post paramaters
-        new = {uid: {
-            "id": uid,
-            "name": name,
-            "image_url": url
-            }}
+        # new = {uid: {
+        #     "id": uid,
+        #     "name": name,
+        #     "image_url": url
+        #     }}
 
-        instance_storage[package].append(new)
+        # instance_storage[package].append(new)
 
-        return json.dumps(json.dumps(new))
+        # return json.dumps(json.dumps(new))
+        return url
 
 
 if __name__ == '__main__': app.run(debug=True)

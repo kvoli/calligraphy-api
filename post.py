@@ -7,7 +7,9 @@ with open("./static/cc/bu.png", "rb") as f:
     encoded_string = base64.b64encode(data)
 
 
-r = requests.post(url=url, data=json.dump({"name": "test", "img": encoded_string, "package": "chinese.json"}))
+# r = requests.post(url=url, data=json.dumps({"name": "test", "img": encoded_string, "package": "chinese.json"}))
+
+r = requests.post(url=url, data=encoded_string)
 
 # w = requests.get(url=url)
 

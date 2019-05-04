@@ -47,7 +47,10 @@ def get_data(package=None):
         # decode and save the image
         url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.jpg'
 
-        imageData = request.get_data()
+        data = request.get_data()
+
+        imageData = data["img"]
+        name = data["name"]
 
         imgdata = base64.b64decode(imageData)
         with open(path, 'wb') as f:
@@ -55,9 +58,9 @@ def get_data(package=None):
 
         # create the json object from the post paramaters
         new = {uid: {
-            "id":uid,
-            "name":request.args['name'],
-            "image_url":url
+            "id": uid,
+            "name": name,
+            "image_url": url
             }}
 
         instance_storage[package].append(new)

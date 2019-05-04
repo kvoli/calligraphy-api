@@ -1,5 +1,6 @@
 import os
 import json
+import base64
 
 
 path = "./static/cc/"
@@ -18,9 +19,17 @@ print(names)
 letters = []
 
 
+with open("./static/cc/bu.png", "rb") as f:
+    data = f.read()
+    encoded_string = base64.b64encode(data)
+
+print(encoded_string)
+
+
+
 def lettersToJson(id, name, url1):
 
-    u1 = curl + "cc/" + url1 + ".png"
+    u1 = curl + "cu/" + url1 + ".png"
     u2 = curl + "stroke/" + url1 + ".gif"
 
     letter = {id: {

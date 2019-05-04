@@ -1,0 +1,10 @@
+Flask
+Flask-RESTful
+gunicorn
+itsdangerous
+Jinja2
+peewee
+Werkzeug
+boto3
+uuid
+flask_request_params

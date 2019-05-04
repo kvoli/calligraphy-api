@@ -1,0 +1,12 @@
+
+venv/bin/__pycache__/
+
+venv/bin/
+
+venv/lib/python3\.7/site-packages/aniso8601/__pycache__/
+
+*.pyc
+
+venv/lib/python3\.7/site-packages/aniso8601/
+
+venv/

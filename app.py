@@ -25,13 +25,13 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/packages/<package>/<name>/<query>')
-def get_data_specific(package=None,name=None, query=None):
-    return json.dumps(instance_storage[package][name][query])
+@app.route('/packages/<package>/<id>')
+def get_package_object(package=None, id=None):
+    return json.dumps(instance_storage[package][0][id])
 
 
 @app.route('/packages/<package>')
-def get_data_package(package=None):
+def get_package(package=None):
     return json.dumps(instance_storage[package])
 
 

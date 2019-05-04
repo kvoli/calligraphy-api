@@ -1,30 +1,44 @@
-from flask import request
+import os
 import json
-import uuid
-
-# class Image:
-
-# 	Images = defaultdict()
-
-# 	def __init__(self, id, url, name):
-# 	self.id = id
-# 	self.url = url
-# 	self.name = name
-# 	Images.append(self)
-
-def lettersToJson():
-	letters = []
-
-	uid = str(uuid.uuid4())
 
 
-     letter = {uid: {
-        "id":uid,
-        "name":request.args['name'],
-        "url":url
+path = "./static/cc/"
+path1 = "./static/stroke/"
+
+curl = "https://frozen-badlands-62690.herokuapp.com/static/"
+
+names = []
+
+
+for file in os.listdir(path):
+    names.append(file)
+
+print(names)
+
+letters = []
+
+
+def lettersToJson(id, name, url1):
+
+    u1 = curl + "cc/" + url1 + ".png"
+    u2 = curl + "stroke/" + url1 + ".gif"
+
+    letter = {id: {
+        "id":id,
+        "name":name,
+        "static":u1,
+        "gif":u2
      }}
-    
 
-     letters.append(letter)
+    return letter
 
-     return json.dumps(json.dumps(letter))
+
+for i in range(len(names)):
+    letters.append(lettersToJson(i,names[i].strip(".png"), names[i].strip(".png")))
+
+
+with open('./packages/chinese.json', 'w') as f:
+    json.dump(letters, f)
+
+
+print(letters)

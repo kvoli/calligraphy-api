@@ -7,9 +7,9 @@ file = "static/cc/bu.png"
 import os
 with open(file, 'rb') as f:
     t = f.read()
-    print(t)
+    # print(t)
     x = base64.b64encode(t)
-    print(x)
+    # print(x)
     out = requests.post('https://frozen-badlands-62690.herokuapp.com/up', data=x)
 
 

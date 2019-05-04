@@ -89,6 +89,30 @@ def get_data():
 
         return json.dumps(imageSimilarity(url, "static/cc/bu.png"))
 
+
+@app.route('/put', methods=['GET', 'POST'])
+def get_data():
+    if request.method == 'GET':
+        return json.dumps(instance_storage)
+    else:
+        # generate a unique id
+        uid = str(uuid.uuid4())
+        # generate image url
+        path = './static/' + uid + '.png'
+        # decode and save the image
+        url = 'https://frozen-badlands-62690.herokuapp.com/static/' + uid + '.png'
+
+        imageData = request.get_data()
+
+        imgdata = base64.b64decode(imageData)
+        with open(path, 'wb') as f:
+            f.write(imgdata)
+
+        print(url)
+
+        return json.dumps({"url": str(url)})
+
+
 @app.route('/sim')
 def get_sim():
     return str(random.random()*40+60)
